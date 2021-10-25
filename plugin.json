@@ -1,0 +1,54 @@
+{
+  "name" : "http-device",
+  "version" : "1.0.0",
+  "description" : "Plugin for handling generic HTTP devices.",
+  "author" : "Alvaro Luis Bustamante",
+  "license" : "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/thinger-io/http-device-plugin.git"
+  },
+  "metadata" : {
+    "name" : "HTTP Device",
+    "description" : "HTTP Devices Integration",
+    "image" : "https://okli.in/wp-content/uploads/2021/04/resticon-removebg-preview.png",
+    "icon" : "https://okli.in/wp-content/uploads/2021/04/resticon-removebg-preview.png"
+  },
+  "tokens" : {
+    "http_device_plugin" : {
+      "name" : "Access from HTTP Device plugin to Thinger.io account",
+      "allow" : {
+        "Device" : {
+          "*" : ["CreateDevice", "SetDeviceProperty", "ReadDeviceProperty", "UpdateDeviceCallback", "CallDeviceCallback"]
+        },
+        "Event" : {
+          "*" : ["SubscribeEvents"]
+        },
+        "Bucket" : {
+          "*" : ["CreateBucket"]
+        },
+        "Plugin" : {
+          "http-device" : "*"
+        }
+      }
+    },
+    "http_device_plugin_callback" : {
+      "name" : "Access from External Service to HTTP Device Plugin callback",
+      "allow" : {
+        "Plugin" : {
+          "http-device" : ["CallPluginEndpoint"]
+        }
+      }
+    }
+  },
+  "task" : {
+    "type" : "docker",
+    "image" : "thinger/http-device-plugin",
+    "port" : 3000
+  },
+  "interface" : {
+    "main" : {
+      "file" : "gui/http-device-settings.js"
+    }
+  }
+}
