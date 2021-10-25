@@ -21,9 +21,6 @@
         "Device" : {
           "*" : ["CreateDevice", "SetDeviceProperty", "ReadDeviceProperty", "UpdateDeviceCallback", "CallDeviceCallback"]
         },
-        "Event" : {
-          "*" : ["SubscribeEvents"]
-        },
         "Bucket" : {
           "*" : ["CreateBucket"]
         },
