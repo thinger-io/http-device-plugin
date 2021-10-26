@@ -84,16 +84,6 @@
                             </div>
 
                             <div class="row wrapper-xs">
-                                <label class="col-sm-4 col-md-2 control-label"><i class="fa fa-map-marked m-r-xs text-muted"></i>Update device location <i class="fa fa-info-circle text-muted" uib-popover="Set device location based on gateway location (if available)" popover-trigger="'mouseenter'"></i></label>
-                                <div class="col-sm-8 col-md-10 m-t-xs">
-                                    <label class="i-switch bg-success">
-                                        <input type="checkbox" ng-model="settings.value[ui.selectedDeviceType].update_device_location">
-                                        <i></i>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="row wrapper-xs">
                                 <label class="col-sm-4 col-md-2 control-label"><i class="fas fa-cloud-download-alt m-r-xs text-muted"></i>Initialize Response Data <i class="fa fa-info-circle text-muted" uib-popover="Specify a default response data to be stored in the device. It can be any JSON document like a string, object, or array." popover-trigger="'mouseenter'"></i></label>
                                 <div class="col-sm-8 col-md-10">
                                     <div ui-ace="{
@@ -174,11 +164,34 @@
                     </uib-tab>
 
                     <uib-tab heading="Webhook Settings">
-                        <div class="font-bold m-b-xs"><i class="fa fa-link"></i> Endpoint Base URL</div>
-                        <pre class="bg-black text-white">{{plugin.taskUrl}}/types/{{ui.selectedDeviceType}}/device/device_id</pre>
+                        <div class="font-bold m-b-xs"><i class="fa fa-link"></i> Endpoint URL</div>
+                        <pre class="bg-black text-white">{{plugin.taskUrl}}/types/<strong>{{ui.selectedDeviceType}}</strong>/devices/<strong>device_id</strong></pre>
 
                         <div class="font-bold m-b-xs"><i class="fa fa-lock"></i> Authorization Header</div>
                         <pre class="bg-black text-white">Bearer {{http_device_plugin_callback}}</pre>
+
+                        <div class="font-bold m-b-xs"><i class="fa fa-code"></i> Content-Type</div>
+                        <pre class="bg-black text-white">application/json</pre>
+
+                        <div class="font-bold m-b-xs"><i class="far fa-file-code"></i> Body Example</div>
+                        <pre class="bg-black text-white">
+{
+    "lat": 40.416775,
+    "lng":-3.70379,
+    "temperature":23.33,
+    "humidity":32.44
+}
+                        </pre>
+                    <div class="font-bold m-b-xs"><i class="fa fa-code"></i> Curl Example</div>
+                        <pre class="bg-black text-success">
+curl \
+  -H "Content-Type: application/json;charset=UTF-8" \
+  -H "Authorization: Bearer {{http_device_plugin_callback}}" \
+  -H "Accept: application/json, text/plain, */*" \
+  -X POST \
+  -d '{"lat":40.416775,"lng":-3.70379,"temperature":23.33,"humidity":32.44}' \
+  {{plugin.taskUrl}}/types/{{ui.selectedDeviceType}}/devices/device_id
+                        </pre>
                     </uib-tab>
 
                 </uib-tabset>

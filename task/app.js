@@ -139,32 +139,6 @@ function runCallback(data, callback, deviceType, extra){
     }
 }
 
-async function updateDeviceProperties(req, deviceId, payload, settings){
-    let properties = [];
-
-    // device location
-    if (settings.update_device_location) {
-        try{
-            if(payload.location){
-                properties.push({property: 'location', value: payload.location});
-            }
-        }catch(error){
-            console.error("cannot get location:", error);
-        }
-    }
-
-    // set device properties (if any)
-    if (properties.length > 0) {
-        return thinger.setDeviceProperties(deviceId, properties)
-                .then((response) => {})
-                .catch((error) => {
-                    console.error("cannot set device properties:", error);
-                });
-    }
-
-    return Promise.resolve();
-}
-
 async function handleDeviceRequest(req) {
     return new Promise(function (resolve, reject) {
         // get payload
@@ -199,12 +173,8 @@ async function handleDeviceRequest(req) {
         // call device callback with payload fields
         thinger.callDeviceCallback(realDeviceId, processedPayload, sourceIP, timestamp)
             .then((response) => {
-                updateDeviceProperties(req, realDeviceId, payload, settings)
-                    .then(() => {
-                        response.data = runCallback(response.data, 'response', deviceType, response.headers);
-                        resolve(response);
-                    })
-                    .catch((error) => { reject(error); } )
+                response.data = runCallback(response.data, 'response', deviceType, response.headers);
+                resolve(response);
             })
             .catch(function (error) {
                 // device is not yet created?
@@ -219,7 +189,6 @@ async function handleDeviceRequest(req) {
                         .then(() => thinger.createBucket(realBucketId, realDeviceId, 'Auto provisioned HTTP Bucket', settings, {source: 'api'}))
                         .then(() => settings.device_response_data ? thinger.setDeviceProperty(realDeviceId, 'device_response', getDefaultResponse(settings)) : Promise.resolve())
                         .then(() => thinger.setDeviceCallback(realDeviceId, {write_bucket: realBucketId, send_property: 'device_response'}, {timeout: getDeviceTimeout(settings)}))
-                        .then(() => updateDeviceProperties(req, realDeviceId, payload, settings))
                         .then(() => thinger.callDeviceCallback(realDeviceId, processedPayload, sourceIP, timestamp))
                         .then((response) => {
                             response.data = runCallback(response.data, 'response', deviceType, response.headers);
