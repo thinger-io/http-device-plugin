@@ -206,7 +206,7 @@ async function handleDeviceRequest(req) {
     });
 }
 
-app.post('/types/:deviceType([0-9a-zA-Z_]+)/devices/:deviceId([0-9a-zA-Z_]+/data)', function (req, res) {
+app.post('/types/:deviceType([0-9a-zA-Z_]+)/devices/:deviceId([0-9a-zA-Z_]+)/data', function (req, res) {
     handleDeviceRequest(req)
         .then(response => {
             if(response.data){
