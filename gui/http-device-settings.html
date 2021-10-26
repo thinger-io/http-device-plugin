@@ -163,7 +163,7 @@
 
                     </uib-tab>
 
-                    <uib-tab heading="Webhook Settings">
+                    <uib-tab heading="Device Integration">
                         <div class="font-bold m-b-xs"><i class="fa fa-link"></i> Endpoint URL</div>
                         <pre class="bg-black text-white">{{plugin.taskUrl}}/types/<strong>{{ui.selectedDeviceType}}</strong>/devices/<strong>device_id</strong></pre>
 
@@ -180,8 +180,7 @@
     "lng":-3.70379,
     "temperature":23.33,
     "humidity":32.44
-}
-                        </pre>
+}</pre>
                     <div class="font-bold m-b-xs"><i class="fa fa-code"></i> Curl Example</div>
                         <pre class="bg-black text-success">
 curl \
@@ -190,8 +189,7 @@ curl \
   -H "Accept: application/json, text/plain, */*" \
   -X POST \
   -d '{"lat":40.416775,"lng":-3.70379,"temperature":23.33,"humidity":32.44}' \
-  {{plugin.taskUrl}}/types/{{ui.selectedDeviceType}}/devices/device_id
-                        </pre>
+  {{plugin.taskUrl}}/types/{{ui.selectedDeviceType}}/devices/device_id</pre>
                     </uib-tab>
 
                 </uib-tabset>
