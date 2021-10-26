@@ -30,7 +30,7 @@
       }
     },
     "http_device_plugin_callback" : {
-      "name" : "Access from External Service to HTTP Device Plugin callback",
+      "name" : "Access from HTTP Devices to HTTP Device Plugin",
       "allow" : {
         "Plugin" : {
           "http-device" : ["CallPluginEndpoint"]
