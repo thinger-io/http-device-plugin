@@ -15,6 +15,10 @@ require('log-timestamp');
 // configure express
 const app = express();
 app.use(express.json({strict: false, limit: '8mb'}));
+app.use(express.text({limit: '8mb'}));
+app.use(express.urlencoded({limit: '8mb'}));
+app.use(express.raw({limit: '8mb'}));
+
 app.enable('trust proxy');
 
 // initialize development options
