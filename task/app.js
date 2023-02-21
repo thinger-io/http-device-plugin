@@ -78,7 +78,16 @@ function getDeviceType(deviceType){
 }
 
 function getSettings(deviceType){
-    return settings[deviceType] || settings['Default'];
+    if(deviceType && deviceType!==''){
+        if(settings.hasOwnProperty(deviceType)){
+            return settings[deviceType];
+        }else{
+            console.error('requested device type is not available');
+        }
+    }else{
+        return settings['Default'];
+    }
+    return undefined;
 }
 
 function getDeviceId(deviceId, settings){
